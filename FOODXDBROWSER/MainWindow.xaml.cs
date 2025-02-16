@@ -33,20 +33,8 @@ namespace FOODXDBROWSER
 
             Chrome.Address = Link;
             Search.Text = Link;
-            HistoryPart.Content = Link;
-            if(History.Visibility == Visibility.Hidden)
-            {
-                HistoryPart.Visibility = Visibility.Hidden;
-                HistoryPart1.Visibility = Visibility.Hidden;
-                HistoryPart2.Visibility = Visibility.Hidden;
-                HistoryPart3.Visibility = Visibility.Hidden;
-            }
-                LastLink = Link;
-                HistoryPart1.Content = LastLink;
+            LastLink = Link;
             
-
-            HistoryPart2.Content = Link;
-            HistoryPart3.Content = Link;
             
             if (addToList)
             {
@@ -80,7 +68,7 @@ namespace FOODXDBROWSER
                 }
             }
         }
-        private void Button_Click(object sender,RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             ToggleWebPages(button.Content.ToString());
@@ -114,21 +102,6 @@ namespace FOODXDBROWSER
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            if (History.IsVisible)
-            {
-                Browser.Visibility = Visibility.Hidden;
-                HistoryPart1.Visibility = Visibility.Hidden;
-                HistoryPart2.Visibility = Visibility.Hidden;
-                HistoryPart3.Visibility = Visibility.Hidden;
-
-                HistoryPart.Visibility = Visibility.Hidden;
-                History.Visibility = Visibility.Hidden;
-            } else
-            {
-                Browser.Visibility = Visibility.Visible;
-
-                History.Visibility=Visibility.Visible;
-            }
         }
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -142,34 +115,16 @@ namespace FOODXDBROWSER
             {
                 Search.Text = "search.brave.com";
                 LoadWebPages(Search.Text);
-                Browser.Content = "To Google";
             }
             else
             {
                 Search.Text = "google.com";
                 LoadWebPages(Search.Text);
-                Browser.Content = "To Brave";
             }
         }
 
         private void History_Click(object sender, RoutedEventArgs e)
         {
-            if (History.IsVisible && HistoryPart.IsVisible)
-            {
-                HistoryPart1.Visibility = Visibility.Hidden;
-                HistoryPart2.Visibility = Visibility.Hidden;
-                HistoryPart3.Visibility = Visibility.Hidden;
-
-                HistoryPart.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                HistoryPart1.Visibility = Visibility.Visible;
-                HistoryPart2.Visibility = Visibility.Visible;
-                HistoryPart3.Visibility = Visibility.Visible;
-
-                HistoryPart.Visibility = Visibility.Visible;
-            }
         }
 
         private void HistoryPart_Click(object sender, RoutedEventArgs e)
@@ -181,6 +136,11 @@ namespace FOODXDBROWSER
 
         private void DarkMode_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -8,60 +8,76 @@
         mc:Ignorable="d"
         Title="Food Browser" Height="450" Width="800" Loaded="Window_Loaded" Icon="Food.png">
 
+    <Window.Resources>
+        <!-- Style for Rounded Buttons -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" BorderThickness="1.5"  BorderBrush="DarkGray">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="DarkGray" BorderThickness="1.5">
+                            <ScrollViewer Margin="4" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30px">
-
-            </RowDefinition>
-            <RowDefinition>
-
-            </RowDefinition>
-
+            <RowDefinition Height="42"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="12*"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
+            <Button Click="Button_Click" Content="←" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button Click="Button_Click" Content="→" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button Click="Button_Click_1" Content="⟳" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button Click="Button_Click_2" Content="⌂" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}"/>
+
+            <TextBox KeyDown="Search_KeyDown" x:Name="Search" FontSize="14" Grid.Column="4" Margin="10,0,10,0" RenderTransformOrigin="0.502,0.135"></TextBox>
 
 
-            <Button Click="Button_Click" Content="←" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="40px" Height="30px" BorderThickness="0" Background="LightGray" Foreground="Black" FontSize="18"></Button>
-            <Button Click="Button_Click" Content="→" Grid.Column="1" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="40px" Height="30px" BorderThickness="0" Background="LightGray" Foreground="Black" FontSize="18"></Button>
-            <Button Click="Button_Click_1" Content="⟳" Grid.Column="2" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="40px" Height="30px" BorderThickness="0" Background="LightGray" Foreground="Black" FontSize="18"></Button>
-            <Button Click="Button_Click_2" Content="⌂" Grid.Column="3" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="40px" Height="30px" BorderThickness="0" Background="LightGray" Foreground="Black" FontSize="18"></Button>
-            <TextBox KeyDown="Search_KeyDown" x:Name="Search" FontSize="16" Grid.Column="4" Background="LightGray" Margin="14,0,14,0"></TextBox>
-            <Button x:Name="Menuu" Click="Button_Click_3" MouseRightButtonUp="Button_MouseRightButtonUp" Content="☰" Grid.Column="5" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="40px" Height="30px" BorderThickness="0" Background="LightGray" Foreground="Black" FontSize="18">
+            <Button x:Name="Menuu" Click="Button_Click_3" MouseRightButtonUp="Button_MouseRightButtonUp" 
+                    Content="☰" Grid.Column="5" Style="{StaticResource RoundedButtonStyle}">
                 <Button.ContextMenu>
-                    <ContextMenu x:Name="Menu"></ContextMenu>
+                    <ContextMenu x:Name="Menu"/>
                 </Button.ContextMenu>
             </Button>
-
-        </Grid>
-        <Border BorderThickness="2" BorderBrush="Black"></Border>
-        <cefSharp:ChromiumWebBrowser x:Name="Chrome" Address="" Grid.Row="1"></cefSharp:ChromiumWebBrowser>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition Width="40px"></ColumnDefinition>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="62"></ColumnDefinition>
-                <ColumnDefinition Width="62"></ColumnDefinition>
-
-            </Grid.ColumnDefinitions>
-            <Button Click="History_Click" Content="History" x:Name="History" Grid.Column="6" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="DarkGray" Foreground="Black" FontSize="12" VerticalAlignment="Top"></Button>
-            <Button Click="Browser_Click" Content="Web Browser" x:Name="Browser" Grid.Column="6" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="DarkGray" Foreground="Black" FontSize="10" VerticalAlignment="Top" Margin="0,21,0,0"></Button>
-            <Button Click="HistoryPart_Click" Content="" x:Name="HistoryPart" Grid.Column="5" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="FloralWhite" Foreground="Black" FontSize="10" VerticalAlignment="Top"/>
-            <Button Click="HistoryPart_Click" Content="" x:Name="HistoryPart1" Grid.Column="5" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="FloralWhite" Foreground="Black" FontSize="10" VerticalAlignment="Top" Margin="0,63,0,0"/>
-            <Button Click="HistoryPart_Click" Content="" x:Name="HistoryPart2" Grid.Column="5" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="FloralWhite" Foreground="Black" FontSize="10" VerticalAlignment="Top" Margin="0,42,0,0"/>
-            <Button Click="HistoryPart_Click" Content="" x:Name="HistoryPart3" Grid.Column="5" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="62" Height="21" BorderThickness="0" Background="FloralWhite" Foreground="Black" FontSize="10" VerticalAlignment="Top" Margin="0,21,0,0"/>
-
         </Grid>
 
+        <cefSharp:ChromiumWebBrowser x:Name="Chrome" Address="" Grid.Row="1" Margin="0,0,0,-2"/>
     </Grid>
 </Window>
