@@ -21,50 +21,46 @@ namespace FOODXDBROWSER
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<string> WebPages;
-        int current = 0;
+        LinkedList<string> WebPagesFront;
+        LinkedList<string> WebPagesBack;
+        bool _addToList = true;
         public MainWindow()
         {
             InitializeComponent();
         }
         void LoadWebPages(string Link, bool addToList = true)
         {
-            string LastLink = "";
-
-            Chrome.Address = Link;
+            _addToList = addToList;
             Search.Text = Link;
-            LastLink = Link;
-            
-            
+            Chrome.Address = Link;
             if (addToList)
             {
-                current++;
-                WebPages.Add(Link);
-
+                WebPagesBack.AddFirst(Link);
             }
         }
         void GoHome()
         {
             Search.Text = "google.com";
             Chrome.Address = "google.com";
-            WebPages.Add("google.com");
         }
         void ToggleWebPages(string Option)
         {
-            if(Option == "→")
+            if(Option == "←")
             {
-                if((WebPages.Count-current-1) != 0)
+                if((WebPagesBack.Count) > 1)
                 {
-                    current++;
-                    LoadWebPages(WebPages[current], false);
+                    WebPagesFront.AddFirst(WebPagesBack.First());
+                    WebPagesBack.RemoveFirst();
+                    LoadWebPages(WebPagesBack.First(), false);
                 }
             }
             else
             {
-                if((WebPages.Count + current - 1) >= WebPages.Count)
+                if((WebPagesFront.Count != 0))
                 {
-                    current--;
-                    LoadWebPages(WebPages[current], false);
+                    LoadWebPages(WebPagesFront.First(), false);
+                    WebPagesBack.AddFirst(WebPagesFront.First());
+                    WebPagesFront.RemoveFirst();
                 }
             }
         }
@@ -75,28 +71,41 @@ namespace FOODXDBROWSER
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            LoadWebPages(WebPages[current]);
+            LoadWebPages(Search.Text, false);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            LoadWebPages(WebPages[0]);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WebPages = new List<string>();
+            WebPagesBack = new LinkedList<string>();
+            WebPagesFront = new LinkedList<string>();
             GoHome();
-            LoadWebPages(Search.Text);
+            Chrome.AddressChanged += Chrome_AddressChanged;
+            LoadWebPages(Search.Text, false);
+            _addToList = true;
         }
 
+
+        private void Chrome_AddressChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Search.Text = e.NewValue.ToString();
+                if(_addToList)
+                {
+                    WebPagesBack.AddFirst(Search.Text);
+                }
+            });
+        }
         private void Search_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
             {
-                LoadWebPages(Search.Text);
-                LoadWebPages(Chrome.Address);
-
+                LoadWebPages(Search.Text, false);
+                _addToList = true;
             }
         }
 
