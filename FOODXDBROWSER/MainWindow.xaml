@@ -18,6 +18,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Width" Value="45"/>
             <Setter Property="Height" Value="36"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -27,6 +28,12 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="AntiqueWhite"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+            </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="TextBox">
@@ -62,10 +69,10 @@
                 <ColumnDefinition Width="12*"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <Button Click="Button_Click" Content="←" Style="{StaticResource RoundedButtonStyle}"/>
-            <Button Click="Button_Click" Content="→" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}"/>
-            <Button Click="Button_Click_1" Content="⟳" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}"/>
-            <Button Click="Button_Click_2" Content="⌂" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="Back"  Click="Button_Click" Content="←" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="Front" Click="Button_Click" Content="→" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="Reload" Click="Button_Click_1" Content="⟳" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}"/>
+            <Button x:Name="Home" Click="Button_Click_2" Content="⌂" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}"/>
 
             <TextBox KeyDown="Search_KeyDown" x:Name="Search" FontSize="14" Grid.Column="4" Margin="10,0,10,0" RenderTransformOrigin="0.502,0.135"></TextBox>
 
